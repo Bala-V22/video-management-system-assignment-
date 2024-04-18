@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <style>
+
+    </style>
+
+    <div class="container mt-4">
+        <div class="video-container">
+            <div class="video">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                <img src="{% url 'video_stream' video_path %}"  class="img-fluid">
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="video-info">
+            <div class="video-section" id="video">
+                {% for video in videos %}
+                    <div class="row text-center m-3" style="box-shadow: 0px 1px 1px rgb(214, 214, 214), 0px -1px 1px rgb(206, 204, 204);">
+                        <p>Video Name - <a href="#" onclick="playVideo('{{ video.url }}')">{{ video.name }}</a></p>
+                    </div>
+                {% endfor %}
+                </div>
+        </div>
+
+        <script>
+            
+function playVideo(videoUrl) {
+    window.location.href = '/play-video/' + videoUrl;
+}
+
+        </script>
+
+    {% endblock content %}

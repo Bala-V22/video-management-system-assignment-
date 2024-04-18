@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+
+<div class="text-center" style="background-color: rgb(143, 143, 143)">
+    <h1 class="text-white">Videos For Your Entertainment</h1>
+</div>    
+    <div id="search">
+        <div id="search-results" class="row text-center m-3" style="display: none; box-shadow: 0px 1px 1px rgb(214, 214, 214), 0px -1px 1px rgb(206, 204, 204);">
+            
+        </div>
+    </div>
+
+    <div class="video-section" id="video">
+    {% for video in videos %}
+        <div class="row text-center m-3" style="box-shadow: 0px 1px 1px rgb(214, 214, 214), 0px -1px 1px rgb(206, 204, 204);">
+            <p>Video Name - <a href="#" onclick="playVideo('{{ video.url }}')">{{ video.name }}</a></p>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,64 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="border-bottom: none;">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Video</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="form-url" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="_method" value="PUT">
+                <input type="text" class="form-control" id="name" value="{{ video.name }}">
+                <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <h2 class="my-4 text-center">Available Videos</h2>
+    <div class="row">
+        {% for video in data %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ video.name }}</h5>
+                    <p class="card-text">Video URL: <a href="#" onclick="playVideo('{{ video.url }}')">Play</a></p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setModalValue('{{ video.name }}', '{{ video.id }}')">Edit</button>
+                    <button onclick="deleteVideo({{ video.id }})" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    $('#form-url').submit(function(event) {
+event.preventDefault(); 
+
+var newName = $('#name').val();
+var formAction = $(this).attr('action');
+
+$.ajax({
+    url: formAction,
+    type: 'PUT',
+    data: { name: newName },
+    headers: { 'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').val() },
+    success: function(response) {
+        window.location.reload();
+    },
+    error: function(error) {
+        console.error('Error updating video name:', error);
+    }
+});
+});
+</script>
+
+{% endblock content %}

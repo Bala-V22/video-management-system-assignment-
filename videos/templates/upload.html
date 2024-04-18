@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6">
+            <h1 class="text-center">Upload Video</h1>
+            <form id="upload-form" method="post" action="{% url 'video_upload_api' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Video Name:</label>
+                    <input type="text" id="name" name="name" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="video-file" class="form-label">Choose Video:</label>
+                    <input type="file" id="video-file" name="video_file" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+            <div id="message"></div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
